@@ -3,14 +3,15 @@
 import json
 import os
 import re
+from datetime import datetime
+from operator import itemgetter
+
 import html2text
 import markdown
 from bs4 import BeautifulSoup
-from datetime import datetime
-from operator import itemgetter
-from download_posts import download_posts
-from download_comments import download_comments
 
+from download_comments import download_comments
+from download_posts import download_posts
 
 TAG = re.compile(r'\[!\[(.*?)\]\(http:\/\/utx.ambience.ru\/img\/.*?\)\]\(.*?\)')
 USER = re.compile(r'<lj user="?(.*?)"?>')
