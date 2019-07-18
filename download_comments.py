@@ -46,7 +46,10 @@ def get_more_comments(start_id, users):
     local_max_id = -1
 
     xml = fetch_xml({'get': 'comment_body', 'startid': start_id})
-    with open('comments-xml/comment_body-{0}.xml'.format(start_id), 'w', encoding='utf-8') as f:
+    with open(
+        'comments-xml/comment_body-{0}.xml'.format(start_id), 'w', 
+        encoding='utf-8'
+    ) as f:
         f.write(xml)
 
     for comment_xml in ET.fromstring(xml).iter('comment'):
@@ -65,7 +68,8 @@ def get_more_comments(start_id, users):
             comment['state'] = comment_xml.attrib['state']
 
         if 'posterid' in comment:
-            comment['author'] = users.get(str(comment['posterid']), "deleted-user")
+            comment['author'] = users.get(
+                str(comment['posterid']), "deleted-user")
 
         local_max_id = max(local_max_id, comment['id'])
         comments.append(comment)
@@ -99,4 +103,3 @@ def download_comments():
 
 if __name__ == '__main__':
     download_comments()
-    

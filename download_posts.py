@@ -2,12 +2,16 @@
 
 import json
 import os
-import requests
 import xml.etree.ElementTree as ET
+
+import requests
+
 from auth import cookies, headers
 
-
-YEARS = range(2003, 2015)  # first to (last + 1)
+YEARS = range(
+    int(os.getenv('DOWNLOAD_START_YEAR')),
+    (int(os.getenv('DOWNLOAD_END_YEAR')) + 1)
+)
 
 
 def fetch_month_posts(year, month):
@@ -63,7 +67,10 @@ def download_posts():
             xml = fetch_month_posts(year, month)
             xml_posts.extend(list(ET.fromstring(xml).iter('entry')))
 
-            with open('posts-xml/{0}-{1:02d}.xml'.format(year, month), 'w+', encoding='utf-8') as file:
+            with open(
+                'posts-xml/{0}-{1:02d}.xml'.format(year, month), 'w+', 
+                encoding='utf-8'
+            ) as file:
                 file.write(xml)
 
     json_posts = list(map(xml_to_json, xml_posts))
