@@ -1,54 +1,31 @@
-# Export your LiveJournal blog data
+# Enhanced Livejournal export
 
-[Livejournal provides a method to export your posts as 
-XML](http://www.livejournal.com/export.bml). However 
-this has to be done manually for every month of your blog. 
-Also [comments are exported separately](http://www.livejournal.com/developer/exporting.bml).
-I wrote this tool to make exporting more convenient.
+This is a fork of [arty-name/livejournal-export](https://github.com/arty-name/livejournal-export) that aims to:
 
-You will need Python 3 to use it.
+1. Update the code to a modern Python workflow
+2. Add a bit more security so you can clone and commit to this repo without saving you credentials.
 
-## export.py
-
-This script will do the exporting. Run it after you 
-have provided cookies and years as described below.
-You will end up with full blog contents in several 
-formats. `posts-html` folder will contain basic HTML
-of posts and comments. `posts-markdown` will contain
-posts in Markdown format with HTML comments and metadata 
-necessary to [generate a static blog with Pelican](http://docs.getpelican.com/).
-`posts-json` will contain posts with nested comments 
-in JSON format should you want to process them further.
-
-## auth.py
-
-First of all you will have to log into Livejournal 
-and copy values of cookies `ljloggedin` and `ljmastersession` 
-to the file auth.py.
-
-## download_posts.py
-
-Edit this file to specify the range of years you want to export.
-This script will download your posts in XML into `posts-xml` 
-folder. Also it will create `posts-json/all.json` file with all 
-the same data in JSON format for convenient processing.
-
-## download_comments.py
-
-This script will download comments from your blog as `comments-xml/*.xml`
-files. Also it will create `comments-json/all.json` with all the 
-comments data in JSON format for convenient processing.
+Thank you @arty-name. With your code, I can now preserve my embarrassing junior high and high school posts for modern platforms.
 
 ## Requirements
 
-* `html2text`
-* `markdown`
-* `beautifulsoup4`
-* `requests`
+- Python 3
+- Pipenv
 
-## Processing exported data separately
+## How to use this script
 
-In the last lines of `export.py` there's a condition `if True:`.
-Change `True` to `False` to skip the downloading step and go
-directly to the processing of already downloaded data.
+You'll need to add cookies from your Livejournal session to a `.env` file that's read in my `auth.py`. To do this:
 
+1. Create a copy of `.env-template` and name it `.env` (`cp .env-template .env`)
+2. Log into Livejournal with the account you want to archive
+3. Open the web inspector in the browser
+4. Click on the Network tab
+5. Select the root HTML document (usually shown as `/` at the top of the network tab)
+6. Click on Cookie
+7. Copy the values from the web inspector into `.env`
+8. Add the years you'd like to archive in `.env`
+9. Run `make` from the command line
+
+This will create several directories with the content from your Livejournal. You can now rest easy that no one will read your Dragon Ball Z fan fiction from 2006.
+
+I looked through the original source code and didn't see any malicious code, but as a general rule, **you should never run code on your computer that you haven't looked through**. If you're paranoid, be sure to read through my source code as well as [the original](https://github.com/arty-name/livejournal-export).
