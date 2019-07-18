@@ -14,7 +14,9 @@ Thank you @arty-name. With your code, I can now preserve my embarrassing junior 
 
 ## How to use this script
 
-You'll need to add cookies from your Livejournal session to a `.env` file that's read in my `auth.py`. To do this:
+You'll need to add cookies from your Livejournal session to a `.env` file that's read in by `auth.py`. 
+
+To do this:
 
 1. Create a copy of `.env-template` and name it `.env` (`cp .env-template .env`)
 2. Log into Livejournal with the account you want to archive
